@@ -21,11 +21,13 @@ public class MemberCrudRepositoryJpa {
 
     private final EntityManager entityManager;
 
+    @Transactional
     public Member save(Member member){
         this.entityManager.persist(member);
         return member;
     }
 
+    @Transactional
     public void delete(Member member){
         this.entityManager.remove(member);
     }
