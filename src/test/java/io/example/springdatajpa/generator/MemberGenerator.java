@@ -1,6 +1,7 @@
 package io.example.springdatajpa.generator;
 
 import io.example.springdatajpa.domain.entity.Member;
+import io.example.springdatajpa.domain.entity.Team;
 
 /**
  * @author : choi-ys
@@ -12,17 +13,23 @@ public class MemberGenerator {
     public static Member createMember(){
         String memberName = "최용석";
         int age = 31;
-        return memberBuilder(memberName, age);
+        Team team = TeamGenerator.createTeam();
+        return memberBuilder(memberName, age, team);
     }
 
-    public static Member createMemberByMemberName(String memberName, int age){
-        return memberBuilder(memberName, age);
+    public static Member createMemberByParam(String memberName, int age){
+        return memberBuilder(memberName, age, null);
     }
 
-    private static Member memberBuilder(String memberName, int age){
+    public static Member createMemberWithTeam(String memberName, int age, Team team){
+        return memberBuilder(memberName, age, team);
+    }
+
+    private static Member memberBuilder(String memberName, int age, Team team){
         return Member.builder()
                 .name(memberName)
                 .age(age)
+                .team(team)
                 .build();
     }
 }
