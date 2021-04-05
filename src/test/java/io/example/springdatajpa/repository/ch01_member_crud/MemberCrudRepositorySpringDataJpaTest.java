@@ -3,7 +3,6 @@ package io.example.springdatajpa.repository.ch01_member_crud;
 import io.example.springdatajpa.common.BaseTest;
 import io.example.springdatajpa.domain.entity.Member;
 import io.example.springdatajpa.generator.MemberGenerator;
-import io.example.springdatajpa.repository.ch01_member_crud.MemberCrudRepositorySpringDataJpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -101,9 +100,9 @@ class MemberCrudRepositorySpringDataJpaTest extends BaseTest {
 //    @Rollback(value = false)
     public void memberCount(){
         // Given
-        Member firstMember = MemberGenerator.createMemberByMemberName("최용석", 31);
-        Member secondMember = MemberGenerator.createMemberByMemberName("이성욱", 31);
-        Member thirdMember = MemberGenerator.createMemberByMemberName("박재현", 29);
+        Member firstMember = MemberGenerator.createMemberByParam("최용석", 31);
+        Member secondMember = MemberGenerator.createMemberByParam("이성욱", 31);
+        Member thirdMember = MemberGenerator.createMemberByParam("박재현", 29);
         this.memberCrudRepositorySpringDataJpa.save(firstMember);
         this.memberCrudRepositorySpringDataJpa.save(secondMember);
         this.memberCrudRepositorySpringDataJpa.save(thirdMember);
@@ -120,9 +119,9 @@ class MemberCrudRepositorySpringDataJpaTest extends BaseTest {
     @DisplayName("FindAll")
     public void findAllMember(){
         // Given
-        Member firstMember = MemberGenerator.createMemberByMemberName("최용석", 31);
-        Member secondMember = MemberGenerator.createMemberByMemberName("이성욱", 31);
-        Member thirdMember = MemberGenerator.createMemberByMemberName("박재현", 29);
+        Member firstMember = MemberGenerator.createMemberByParam("최용석", 31);
+        Member secondMember = MemberGenerator.createMemberByParam("이성욱", 31);
+        Member thirdMember = MemberGenerator.createMemberByParam("박재현", 29);
         this.memberCrudRepositorySpringDataJpa.save(firstMember);
         this.memberCrudRepositorySpringDataJpa.save(secondMember);
         this.memberCrudRepositorySpringDataJpa.save(thirdMember);
