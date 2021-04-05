@@ -1,5 +1,6 @@
 package io.example.springdatajpa.domain.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,33 @@ public class Member {
 
     @Column(name = "member_name", nullable = false, length = 30)
     private String name;
+
+    @Column(name ="age", nullable = true)
+    private int age;
+
+    // * --------------------------------------------------------------
+    // * Header : 도메인 생성
+    // * @author : choi-ys
+    // * @date : 2021/04/05 2:19 오후
+    // * --------------------------------------------------------------
+
+    @Builder
+    public Member(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // * --------------------------------------------------------------
+    // * Header : 비즈니스 로직
+    // * @author : choi-ys
+    // * @date : 2021/04/05 2:19 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 회원 이름 변경
+     * @param changedMemberName 변경할 회원 이름
+     */
+    public void changeMemberName(String changedMemberName){
+        this.name = changedMemberName;
+    };
 }
