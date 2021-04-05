@@ -41,4 +41,18 @@ public class Team {
     public Team(String name) {
         this.name = name;
     }
+
+    // * --------------------------------------------------------------
+    // * Header : 비즈니스 로직
+    // * @author : choi-ys
+    // * @date : 2021/04/05 7:39 오후
+    // * --------------------------------------------------------------
+
+    /**
+     * 팀 이름 변경
+     * @param changedTeamName 변경할 팀 이름
+     */
+    public void changeTeamName(String changedTeamName){
+        this.name = changedTeamName;
+    }
 }
