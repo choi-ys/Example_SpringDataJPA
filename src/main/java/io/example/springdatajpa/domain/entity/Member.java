@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 /**
@@ -35,15 +36,37 @@ public class Member {
     private int age;
 
     // * --------------------------------------------------------------
+    // * Header : Entity의 연관관계 설정
+    // * @author : choi-ys
+    // * @date : 2021/04/05 7:58 오후
+    // * --------------------------------------------------------------
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "team_no", foreignKey = @ForeignKey(name = "PK_MEMBER_TEAM"))
+    private Team team;
+
+    // * --------------------------------------------------------------
+    // * Header : 양방향 연관관계 객체의 값 설정
+    // * @author : choi-ys
+    // * @date : 2021/04/05 7:57 오후
+    // * --------------------------------------------------------------
+    public void setTeam(Team team){
+        this.team = team;
+        team.getMemberList().add(this);
+    }
+
+    // * --------------------------------------------------------------
     // * Header : 도메인 생성
     // * @author : choi-ys
     // * @date : 2021/04/05 2:19 오후
     // * --------------------------------------------------------------
 
     @Builder
-    public Member(String name, int age) {
+    public Member(String name, int age, Team team) {
         this.name = name;
         this.age = age;
+        if(team != null){
+            this.setTeam(team);
+        }
     }
 
     // * --------------------------------------------------------------
