@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository;
+package io.example.springdatajpa.repository.ch01_member_crud;
 
 import io.example.springdatajpa.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +21,13 @@ public class MemberCrudRepositoryJpa {
 
     private final EntityManager entityManager;
 
+    @Transactional
     public Member save(Member member){
         this.entityManager.persist(member);
         return member;
     }
 
+    @Transactional
     public void delete(Member member){
         this.entityManager.remove(member);
     }

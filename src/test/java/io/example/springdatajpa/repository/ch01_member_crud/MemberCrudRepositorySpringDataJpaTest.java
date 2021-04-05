@@ -1,11 +1,11 @@
-package io.example.springdatajpa.repository;
+package io.example.springdatajpa.repository.ch01_member_crud;
 
 import io.example.springdatajpa.common.BaseTest;
 import io.example.springdatajpa.domain.entity.Member;
 import io.example.springdatajpa.generator.MemberGenerator;
+import io.example.springdatajpa.repository.ch01_member_crud.MemberCrudRepositorySpringDataJpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,14 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author : choi-ys
- * @date : 2021/04/05 11:09 오전
- * @Content : 순수 JPA Repository Test Case
+ * @date : 2021/04/05 10:58 오전
+ * @Content : Spring Data Jpa Repository Test
  */
-@DisplayName("CrudRepository[JPA]:Member")
-class MemberCrudRepositoryJpaTest extends BaseTest {
+@DisplayName("CrudRepository[SpringDataJpa]:Member")
+class MemberCrudRepositorySpringDataJpaTest extends BaseTest {
 
     @Resource
-    MemberCrudRepositoryJpa memberCrudRepositoryJpa;
+    MemberCrudRepositorySpringDataJpa memberCrudRepositorySpringDataJpa;
 
     @Test
     @DisplayName("Save")
@@ -35,7 +35,7 @@ class MemberCrudRepositoryJpaTest extends BaseTest {
         Member member = MemberGenerator.createMember();
 
         // When
-        Member savedMember = this.memberCrudRepositoryJpa.save(member);
+        Member savedMember = this.memberCrudRepositorySpringDataJpa.save(member);
 
         // Then
         assertEquals(savedMember, member);
@@ -49,10 +49,10 @@ class MemberCrudRepositoryJpaTest extends BaseTest {
     public void findMemberById(){
         // Given
         Member member = MemberGenerator.createMember();
-        this.memberCrudRepositoryJpa.save(member);
+        this.memberCrudRepositorySpringDataJpa.save(member);
 
         // When
-        Optional<Member> optionalMember = memberCrudRepositoryJpa.findById(member.getNo());
+        Optional<Member> optionalMember = this.memberCrudRepositorySpringDataJpa.findById(member.getNo());
         Member selectedMember = optionalMember.orElseThrow();
 
         // Then
@@ -65,7 +65,7 @@ class MemberCrudRepositoryJpaTest extends BaseTest {
     public void updateMember(){
         // Given
         Member member = MemberGenerator.createMember();
-        Member savedMember = this.memberCrudRepositoryJpa.save(member);
+        Member savedMember = this.memberCrudRepositorySpringDataJpa.save(member);
 
         // When
         String changedMemberName = "최용";
@@ -82,15 +82,16 @@ class MemberCrudRepositoryJpaTest extends BaseTest {
     public void deleteMember(){
         // Given
         Member member = MemberGenerator.createMember();
-        Member savedMember = this.memberCrudRepositoryJpa.save(member);
+
+        Member savedMember = this.memberCrudRepositorySpringDataJpa.save(member);
         assertEquals(savedMember, member);
 
         // When
-        this.memberCrudRepositoryJpa.delete(member);
+        this.memberCrudRepositorySpringDataJpa.delete(savedMember);
 
         // Then
         NoSuchElementException noSuchElementException = assertThrows(NoSuchElementException.class, () -> {
-            this.memberCrudRepositoryJpa.findById(member.getNo()).orElseThrow();
+            this.memberCrudRepositorySpringDataJpa.findById(member.getNo()).orElseThrow();
         });
         assertEquals(noSuchElementException.getMessage(), "No value present");
     }
@@ -103,12 +104,12 @@ class MemberCrudRepositoryJpaTest extends BaseTest {
         Member firstMember = MemberGenerator.createMemberByMemberName("최용석", 31);
         Member secondMember = MemberGenerator.createMemberByMemberName("이성욱", 31);
         Member thirdMember = MemberGenerator.createMemberByMemberName("박재현", 29);
-        this.memberCrudRepositoryJpa.save(firstMember);
-        this.memberCrudRepositoryJpa.save(secondMember);
-        this.memberCrudRepositoryJpa.save(thirdMember);
+        this.memberCrudRepositorySpringDataJpa.save(firstMember);
+        this.memberCrudRepositorySpringDataJpa.save(secondMember);
+        this.memberCrudRepositorySpringDataJpa.save(thirdMember);
 
         // When
-        long memberCount = this.memberCrudRepositoryJpa.count();
+        long memberCount = this.memberCrudRepositorySpringDataJpa.count();
 
         // Then
         assertThat(memberCount).isNotZero();
@@ -122,17 +123,18 @@ class MemberCrudRepositoryJpaTest extends BaseTest {
         Member firstMember = MemberGenerator.createMemberByMemberName("최용석", 31);
         Member secondMember = MemberGenerator.createMemberByMemberName("이성욱", 31);
         Member thirdMember = MemberGenerator.createMemberByMemberName("박재현", 29);
-        this.memberCrudRepositoryJpa.save(firstMember);
-        this.memberCrudRepositoryJpa.save(secondMember);
-        this.memberCrudRepositoryJpa.save(thirdMember);
+        this.memberCrudRepositorySpringDataJpa.save(firstMember);
+        this.memberCrudRepositorySpringDataJpa.save(secondMember);
+        this.memberCrudRepositorySpringDataJpa.save(thirdMember);
 
         // When
-        List<Member> savedMemberList = this.memberCrudRepositoryJpa.findAll();
+        List<Member> savedMemberList =this.memberCrudRepositorySpringDataJpa.findAll(); // JPQL 실행 전 flush 발생
 
         // Then
         assertThat(savedMemberList.size()).isNotZero();
         assertThat(savedMemberList.contains(firstMember));
         assertThat(savedMemberList.contains(secondMember));
+        assertThat(savedMemberList.contains(thirdMember));
         assertThat(savedMemberList.contains(thirdMember));
     }
 }
