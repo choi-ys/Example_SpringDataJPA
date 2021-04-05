@@ -3,9 +3,9 @@ package io.example.springdatajpa.repository;
 import io.example.springdatajpa.common.BaseTest;
 import io.example.springdatajpa.domain.entity.Member;
 import io.example.springdatajpa.generator.MemberGenerator;
+import io.example.springdatajpa.repository.ch01_member_crud.MemberCrudRepositoryJpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository;
+package io.example.springdatajpa.repository.ch01_member_crud;
 
 import io.example.springdatajpa.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
