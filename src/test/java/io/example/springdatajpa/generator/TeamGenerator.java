@@ -1,6 +1,8 @@
 package io.example.springdatajpa.generator;
 
 import io.example.springdatajpa.domain.entity.Team;
+import io.example.springdatajpa.repository.ch02_team_crud.TeamCrudRepositorySpringDataJpa;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author : choi-ys
@@ -8,6 +10,13 @@ import io.example.springdatajpa.domain.entity.Team;
  * @Content : 팀 TC 수행에 필요한 Team Entity 생성
  */
 public class TeamGenerator {
+
+    @Autowired
+    TeamCrudRepositorySpringDataJpa teamCrudRepositorySpringDataJpa;
+
+    public Team savedTeam(){
+        return teamCrudRepositorySpringDataJpa.save(createTeam());
+    }
 
     public static Team createTeam(){
         String teamName = "CoreDevTeam";

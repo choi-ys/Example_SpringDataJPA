@@ -2,6 +2,8 @@ package io.example.springdatajpa.generator;
 
 import io.example.springdatajpa.domain.entity.Member;
 import io.example.springdatajpa.domain.entity.Team;
+import io.example.springdatajpa.repository.ch01_member_crud.MemberCrudRepositorySpringDataJpa;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author : choi-ys
@@ -10,11 +12,27 @@ import io.example.springdatajpa.domain.entity.Team;
  */
 public class MemberGenerator {
 
+    @Autowired
+    MemberCrudRepositorySpringDataJpa memberCrudRepositorySpringDataJpa;
+
+    public Member savedMember(){
+        return memberCrudRepositorySpringDataJpa.save(createMember());
+    }
+
+    public Member savedMemberByParam(String memberName, int age){
+        return memberCrudRepositorySpringDataJpa.save(createMemberByParam(memberName, age));
+    }
+
+    public Member savedMemberWithTeam(String memberName, int age, Team team){
+        return memberCrudRepositorySpringDataJpa.save(
+                createMemberWithTeam(memberName, age, team)
+        );
+    }
+
     public static Member createMember(){
         String memberName = "최용석";
         int age = 31;
-        Team team = TeamGenerator.createTeam();
-        return memberBuilder(memberName, age, team);
+        return createMemberByParam(memberName, age);
     }
 
     public static Member createMemberByParam(String memberName, int age){
