@@ -1,5 +1,8 @@
 package io.example.springdatajpa.domain.entity;
 
+import io.example.springdatajpa.repository.ch_06_auditing_for_entity_metadata.domain.common.BaseEntity;
+import io.example.springdatajpa.repository.ch_06_auditing_for_entity_metadata.domain.common.BaseTimeEntity;
+import io.example.springdatajpa.repository.ch_06_auditing_for_entity_metadata.domain.common.JpaBaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +26,9 @@ import static lombok.AccessLevel.PROTECTED;
 )
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public class Member {
+//public class Member extends JpaBaseEntity {
+public class Member extends BaseTimeEntity {
+//public class Member extends BaseEntity {
 
     @Id @GeneratedValue(generator = "MEMBER_ENTITY_SEQ_GENERATOR")
     @Column(name = "member_no")
