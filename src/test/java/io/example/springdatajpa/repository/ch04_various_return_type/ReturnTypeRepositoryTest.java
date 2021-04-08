@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.example.springdatajpa.common.BaseTest;
 import io.example.springdatajpa.domain.entity.Member;
 import io.example.springdatajpa.generator.MemberGenerator;
+import io.example.springdatajpa.util.paging.PagingUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,11 +102,12 @@ class ReturnTypeRepositoryTest extends BaseTest {
         this.memberGenerator.savedMemberByParam("전성원", 25);
 
         int ageCriteria = 30;
-        int requestPage = 0;
+        int requestPage = 1;
         int perPageNum = 3;
         String sortProperties = "name";
+        Sort orderBy = Sort.by(Sort.Direction.DESC, sortProperties);
 
-        PageRequest pageRequest = createPageRequest(requestPage, perPageNum, sortProperties);
+        PageRequest pageRequest = PagingUtils.createPageRequest(requestPage, perPageNum, orderBy);
 
         // When
         Page<Member> memberPageListByAge = returnTypeRepository.findMemberPageListByAge(ageCriteria, pageRequest);
@@ -141,11 +143,12 @@ class ReturnTypeRepositoryTest extends BaseTest {
         this.memberGenerator.savedMemberByParam("전성원", 25);
 
         int ageCriteria = 30;
-        int requestPage = 0;
+        int requestPage = 1;
         int perPageNum = 3;
         String sortProperties = "name";
+        Sort orderBy = Sort.by(Sort.Direction.DESC, sortProperties);
 
-        PageRequest pageRequest = createPageRequest(requestPage, perPageNum, sortProperties);
+        PageRequest pageRequest = PagingUtils.createPageRequest(requestPage, perPageNum, orderBy);
 
         // When
         Slice<Member> memberSliceListByAge = returnTypeRepository.findMemberSliceListByAge(ageCriteria, pageRequest);
@@ -164,9 +167,5 @@ class ReturnTypeRepositoryTest extends BaseTest {
         assertEquals(memberSliceListByAge.isLast(), false); // 현재 페이지의 마지막 페이지 여부
         assertEquals(memberSliceListByAge.hasNext(), true); // 다음 페이지 존재 여부
         assertEquals(memberSliceListByAge.hasPrevious(), false); // 이전 페이지 존재 여부
-    }
-
-    private PageRequest createPageRequest(int requestPage, int perPageNum, String sortProperties) {
-        return PageRequest.of(requestPage, perPageNum, Sort.by(Sort.Direction.DESC, sortProperties));
     }
 }
