@@ -16,13 +16,18 @@ import java.util.Optional;
  */
 public interface ReturnTypeRepository extends JpaRepository<Member, Long> {
 
+    // 단건 조회 : 데이터가 없는 경우 Null
     Member findMemberByNo(long memberNo);
 
+    // 단건의 Optional 조회
     Optional<Member> findOptionalMemberByNo(long memberNo);
 
+    // Collection 조회 : 데이터가 없는 경우 비어있는 Collection을 반환 -> size = 0 (주의 : Null이 아님)
     List<Member> findMemberListByAge(int age);
 
+    // Collection 조회시 page 처리ReturnTypeRepository
     Page<Member> findMemberPageListByAge(int age, Pageable pageable);
 
+    // Collection 조회 시 slice 처리
     Slice<Member> findMemberSliceListByAge(int age, Pageable pageable);
 }
