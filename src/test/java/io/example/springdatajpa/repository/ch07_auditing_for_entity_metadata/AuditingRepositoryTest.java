@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch_06_auditing_for_entity_metadata;
+package io.example.springdatajpa.repository.ch07_auditing_for_entity_metadata;
 
 import io.example.springdatajpa.common.BaseTest;
 import io.example.springdatajpa.domain.entity.Member;
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.Rollback;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;

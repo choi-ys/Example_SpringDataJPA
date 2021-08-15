@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch_05_paging;
+package io.example.springdatajpa.repository.ch06_paging;
 
 import io.example.springdatajpa.domain.entity.Member;
 import org.springframework.data.domain.Page;

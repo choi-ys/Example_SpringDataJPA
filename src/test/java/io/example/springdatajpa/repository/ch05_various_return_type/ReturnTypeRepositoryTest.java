@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch04_various_return_type;
+package io.example.springdatajpa.repository.ch05_various_return_type;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
