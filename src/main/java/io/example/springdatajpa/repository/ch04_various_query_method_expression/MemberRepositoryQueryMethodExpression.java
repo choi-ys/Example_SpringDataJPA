@@ -1,6 +1,7 @@
 package io.example.springdatajpa.repository.ch04_various_query_method_expression;
 
 import io.example.springdatajpa.domain.entity.Member;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -65,8 +66,8 @@ public interface MemberRepositoryQueryMethodExpression extends JpaRepository<Mem
      */
     List<Member> findByNameStartingWith(String name);
     List<Member> findByNameEndingWith(String name);
-    List<Member> findByNameContains(String name);
-    List<Member> findByNameLike(String name);
+    List<Member> findByNameContains(String name); // 권장 : JPA에서 해당 구문 실행 시 파라미터 앞뒤로 "%"를 추가
+    List<Member> findByNameLike(String name); // 해당 절에 파라미터 앞뒤로 "%"를 코드에 명시해야 하므로 Contains를 권장
 
     /**
      * 정렬과 limit 조건을 활용한 순위 산출
@@ -77,6 +78,7 @@ public interface MemberRepositoryQueryMethodExpression extends JpaRepository<Mem
      *  - ex) First100, Top100 -> limit 100
      * FirstN, TopN키워드와 OrderBy...Asc, OrderBy...Desc조건을 활용하여 순위 산출
      */
+    Member findFirstBy(Sort orders); // 권장 : Order By에 해당 하는 인자를 Sort 객체로 받아서 처리
     Member findFirstByOrderByAgeAsc();
     Member findTopByOrderByAgeAsc();
     List<Member> findTop2ByOrderByAgeDesc();
