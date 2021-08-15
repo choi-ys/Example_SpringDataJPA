@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch_06_auditing_for_entity_metadata.domain.common;
+package io.example.springdatajpa.repository.ch07_auditing_for_entity_metadata.domain.common;
 
 import lombok.Getter;
 

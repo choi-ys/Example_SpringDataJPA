@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch_05_paging;
+package io.example.springdatajpa.repository.ch06_paging;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch_06_auditing_for_entity_metadata;
+package io.example.springdatajpa.repository.ch07_auditing_for_entity_metadata;
 
 import io.example.springdatajpa.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
