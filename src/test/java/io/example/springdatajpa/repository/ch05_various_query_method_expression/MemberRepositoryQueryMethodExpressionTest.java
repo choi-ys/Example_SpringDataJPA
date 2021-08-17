@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch04_various_query_method_expression;
+package io.example.springdatajpa.repository.ch05_various_query_method_expression;
 
 import io.example.springdatajpa.config.AuditorConfig;
 import io.example.springdatajpa.domain.entity.Member;
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("[#Ch.05]Query Method Expression")
 @ActiveProfiles("test")
 @Import(AuditorConfig.class)
-class MemberRepositoryTest {
+class MemberRepositoryQueryMethodExpressionTest {
 
     @Autowired
     EntityManager entityManager;

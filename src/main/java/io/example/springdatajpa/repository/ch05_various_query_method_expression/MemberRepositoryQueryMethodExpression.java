@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch04_various_query_method_expression;
+package io.example.springdatajpa.repository.ch05_various_query_method_expression;
 
 import io.example.springdatajpa.domain.entity.Member;
 import org.springframework.data.domain.Sort;
