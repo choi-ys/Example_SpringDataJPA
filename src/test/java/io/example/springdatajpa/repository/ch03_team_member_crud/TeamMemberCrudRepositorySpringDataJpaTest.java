@@ -5,8 +5,8 @@ import io.example.springdatajpa.domain.entity.Member;
 import io.example.springdatajpa.domain.entity.Team;
 import io.example.springdatajpa.generator.MemberGenerator;
 import io.example.springdatajpa.generator.TeamGenerator;
-import io.example.springdatajpa.repository.ch01_member_crud.MemberCrudRepositorySpringDataJpa;
-import io.example.springdatajpa.repository.ch02_team_crud.TeamCrudRepositorySpringDataJpa;
+import io.example.springdatajpa.repository.ch02_member_crud.MemberCrudRepositorySpringDataJpa;
+import io.example.springdatajpa.repository.ch03_team_crud.TeamCrudRepositorySpringDataJpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

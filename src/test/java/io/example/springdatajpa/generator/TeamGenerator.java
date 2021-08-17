@@ -1,7 +1,7 @@
 package io.example.springdatajpa.generator;
 
 import io.example.springdatajpa.domain.entity.Team;
-import io.example.springdatajpa.repository.ch02_team_crud.TeamCrudRepositorySpringDataJpa;
+import io.example.springdatajpa.repository.ch03_team_crud.TeamCrudRepositorySpringDataJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

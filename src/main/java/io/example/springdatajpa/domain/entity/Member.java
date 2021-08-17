@@ -1,6 +1,6 @@
 package io.example.springdatajpa.domain.entity;
 
-import io.example.springdatajpa.repository.ch07_auditing_for_entity_metadata.domain.common.BaseTimeEntity;
+import io.example.springdatajpa.repository.ch08_auditing_for_entity_metadata.domain.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
