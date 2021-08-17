@@ -34,7 +34,7 @@ import static lombok.AccessLevel.PROTECTED;
         ),
         indexes = { // Entity에 명시된 항목과 매핑되는 컬럼에 인덱싱을 설정
                 @Index(columnList = "createdDate")
-        },
+        }
 )
 /** @SequenceGenerator : DDL생성 시 해당 설정을 이용하여 Sequence객체 생성 및 매핑
  *  - name : Sequence를 생성하는 SequenceGenerator의 이름을 지정

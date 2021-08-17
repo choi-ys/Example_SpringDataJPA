@@ -1,4 +1,4 @@
-package io.example.springdatajpa.repository.ch05_various_query_method_expression;
+package io.example.springdatajpa.repository.ch04_various_query_method_expression;
 
 import io.example.springdatajpa.config.AuditorConfig;
 import io.example.springdatajpa.domain.entity.Member;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
@@ -64,7 +65,7 @@ class MemberRepositoryTest {
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedGreaterThanEqualResult),
+                () -> assertNotEquals(expectedGreaterThanEqualResult.size(), 0),
                 () -> expectedGreaterThanEqualResult.stream().forEach(
                         it -> assertTrue(it.getAge() >= criteriaAge)
                 )
@@ -83,7 +84,7 @@ class MemberRepositoryTest {
     
         // Then
         assertAll(
-                () -> assertNotNull(expectedAfterResult),
+                () -> assertNotEquals(expectedAfterResult.size(), 0),
                 () -> assertEquals(expectedAfterResult, expectedGreaterThanResult),
                 () -> expectedAfterResult.stream().forEach(
                         it -> assertTrue(it.getAge() > criteriaAge)
@@ -102,7 +103,7 @@ class MemberRepositoryTest {
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedLessThanEqualResult),
+                () -> assertNotEquals(expectedLessThanEqualResult.size(), 0),
                 () -> expectedLessThanEqualResult.stream().forEach(
                         it -> assertTrue(it.getAge() <= criteriaAge)
                 )
@@ -121,7 +122,7 @@ class MemberRepositoryTest {
     
         // Then
         assertAll(
-                () -> assertNotNull(expectedBeforeResult),
+                () -> assertNotEquals(expectedBeforeResult.size(), 0),
                 () -> assertEquals(expectedBeforeResult, expectedLessThanResult),
                 () -> expectedBeforeResult.stream().forEach(
                         it -> assertTrue(it.getAge() < criteriaAge)
@@ -141,7 +142,7 @@ class MemberRepositoryTest {
     
         // Then
         assertAll(
-                () -> assertNotNull(expectedBetweenResult),
+                () -> assertNotEquals(expectedBetweenResult.size(), 0),
                 () -> expectedBetweenResult.stream().forEach(
                         it -> assertTrue(it.getAge() >= 29 && it.getAge() <= 30)
                 )
@@ -159,7 +160,7 @@ class MemberRepositoryTest {
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedGreaterThanEqual),
+                () -> assertNotEquals(expectedGreaterThanEqual.size(), 0),
                 () -> expectedGreaterThanEqual.stream().forEach(
                         it -> assertTrue((it.getCreatedDate().isAfter(criteriaDate)
                                         || it.getCreatedDate().isEqual(criteriaDate))
@@ -180,7 +181,7 @@ class MemberRepositoryTest {
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedAfterResult),
+                () -> assertNotEquals(expectedAfterResult.size(), 0),
                 () -> assertEquals(expectedAfterResult, expectedGreaterThanResult),
                 () -> expectedAfterResult.stream().forEach(
                         it -> assertTrue(it.getCreatedDate().isAfter(criteriaDate))
@@ -199,7 +200,7 @@ class MemberRepositoryTest {
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedBeforeResult),
+                () -> assertNotEquals(expectedBeforeResult.size(), 0),
                 () -> expectedBeforeResult.stream().forEach(
                         it -> assertTrue((it.getCreatedDate().isBefore(criteriaDate)
                                 || it.getCreatedDate().isEqual(criteriaDate))
@@ -220,7 +221,7 @@ class MemberRepositoryTest {
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedBeforeResult),
+                () -> assertNotEquals(expectedBeforeResult.size(), 0),
                 () -> assertEquals(expectedBeforeResult, expectedLessThanResult),
                 () -> expectedBeforeResult.stream().forEach(
                         it -> it.getCreatedDate().isBefore(futureDateTime)
@@ -232,15 +233,15 @@ class MemberRepositoryTest {
     @DisplayName("범위(날짜) : Between")
     public void betweenDate(){
         // Given
-        LocalDateTime startDateTime = LocalDateTime.now();
-        LocalDateTime endDateTime = LocalDateTime.now();
+        LocalDateTime startDateTime = LocalDateTime.now().minusDays(1L);
+        LocalDateTime endDateTime = LocalDateTime.now().plusDays(1L);
 
         // When
         List<Member> expectedBetweenResult = memberRepositoryQueryMethodExpression.findByCreatedDateBetween(startDateTime, endDateTime);
 
         // Then
         assertAll(
-                () -> assertNotNull(expectedBetweenResult),
+                () -> assertNotEquals(expectedBetweenResult.size(), 0),
                 () -> expectedBetweenResult.stream().forEach(
                         it -> assertTrue(it.getCreatedDate().isAfter(startDateTime)
                                         && it.getCreatedDate().isBefore(endDateTime)
@@ -288,17 +289,40 @@ class MemberRepositoryTest {
                         .collect(Collectors.toList()).size(), 0)
         );
     }
+
+    @Test
+    @DisplayName("패턴 검색 : Like")
+    public void likeNmae(){
+        // Given
+        String searchText = "최";
+
+        // When
+        List<Member> byNameStartingWith = memberRepositoryQueryMethodExpression.findByNameStartingWith(searchText);
+        List<Member> byNameEndingWith = memberRepositoryQueryMethodExpression.findByNameEndingWith(searchText);
+        List<Member> byNameContains = memberRepositoryQueryMethodExpression.findByNameContains(searchText);
+        List<Member> byNameLike = memberRepositoryQueryMethodExpression.findByNameLike(searchText);
+
+        // Then
+        assertAll(
+                () -> assertNotEquals(byNameStartingWith.size(), 0),
+                () -> assertEquals(byNameEndingWith.size(), 0),
+                () -> assertNotEquals(byNameContains.size(), 0),
+                () -> assertEquals(byNameLike.size(), 0)
+        );
+    }
     
     @Test
     @DisplayName("순위 산출 : First, Top, OrderByDesc/Asc")
     public void first(){
         // When
+        Member expectedTopMemberOrderByAgeDesc = memberRepositoryQueryMethodExpression.findFirstBy(Sort.by(Sort.Order.desc("age")));
         Member expectedFirstMemberOrderByAgeAsc = memberRepositoryQueryMethodExpression.findFirstByOrderByAgeAsc();
         Member expectedTopMemberOrderByAgeAsc = memberRepositoryQueryMethodExpression.findTopByOrderByAgeAsc();
         List<Member> expectedTop2MemberListOrderByAgeDesc = memberRepositoryQueryMethodExpression.findTop2ByOrderByAgeDesc();
 
         // Then
         assertAll(
+                () -> assertNotNull(expectedTopMemberOrderByAgeDesc),
                 () -> assertNotNull(expectedFirstMemberOrderByAgeAsc),
                 () -> assertEquals(expectedTopMemberOrderByAgeAsc, expectedTopMemberOrderByAgeAsc),
                 () -> assertEquals(expectedTop2MemberListOrderByAgeDesc.size(), 2)
